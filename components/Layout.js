@@ -46,6 +46,11 @@ export default function Layout({children}) {
                             <Typography>Next Project</Typography>
                         </Link>
                     </NextLink>
+                    <NextLink href="/master/department" passHref>
+                        <Link>
+                            <Typography>Department</Typography>
+                        </Link>
+                    </NextLink>
                 </Toolbar>
                 </AppBar>
 
