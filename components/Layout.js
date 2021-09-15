@@ -1,8 +1,9 @@
-import { createTheme, AppBar, Container, ThemeProvider, Toolbar, Typography } from '@material-ui/core'
+import { createTheme, AppBar, Container, ThemeProvider, Toolbar, Typography, Link } from '@material-ui/core'
 import { green } from '@material-ui/core/colors'
 import Head from 'next/head'
 import React from 'react'
 import useStyles from '../utils/styles'
+import NextLink from 'next/link';
 
 
 
@@ -22,13 +23,17 @@ export default function Layout({children}) {
     return (
         <div>
             <Head>
-                <title>Next Projet</title>
+                <title>Next Project</title>
             </Head>
 
             <ThemeProvider theme={theme}>
                 <AppBar position="static" className={classes.navbar}>
                 <Toolbar>
-                    <Typography>Next Project</Typography>
+                    <NextLink href="/" passHref>
+                        <Link>
+                            <Typography>Next Project</Typography>
+                        </Link>
+                    </NextLink>
                 </Toolbar>
                 </AppBar>
 
