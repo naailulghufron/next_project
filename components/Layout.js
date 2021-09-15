@@ -46,6 +46,7 @@ export default function Layout({children}) {
                             <Typography>Next Project</Typography>
                         </Link>
                     </NextLink>
+                    <div className={classes.grow}></div>
                     <NextLink href="/master/department" passHref>
                         <Link>
                             <Typography>Department</Typography>
