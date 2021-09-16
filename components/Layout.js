@@ -1,4 +1,6 @@
 import { createTheme, AppBar, Container, ThemeProvider, Toolbar, Typography, Link, List, ListItem, Divider, Button, SwipeableDrawer, Drawer, IconButton } from '@material-ui/core'
+import clsx from 'clsx';
+import MenuIcon from '@material-ui/icons/Menu';
 import { green } from '@material-ui/core/colors'
 import Head from 'next/head'
 import React from 'react'
@@ -11,6 +13,10 @@ import MailIcon from '@material-ui/icons/Mail';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import CssBaseline from '@material-ui/core/CssBaseline';
+
+function ListItemLink(props) {
+  return <ListItem button component="a" {...props} />;
+}
 
 export default function Layout({children}) {
     const drawerWidth = 240;
@@ -111,20 +117,32 @@ export default function Layout({children}) {
             <CssBaseline />
 
             <ThemeProvider theme={theme}>
-                <AppBar position="static" className={classes.navbar}>
-                <Toolbar>
-                    <NextLink href="/" passHref>
-                        <Link>
-                            <Typography>Next Project</Typography>
-                        </Link>
-                    </NextLink>
-                    <div className={classes.grow}></div>
-                    <NextLink href="/master/department" passHref>
-                        <Link>
-                            <Typography>Department</Typography>
-                        </Link>
-                    </NextLink>
-                </Toolbar>
+                <AppBar position="static" className={clsx(classes.navbar, {
+                [classes.appBarShift]: open,
+                })}>
+                    <Toolbar>
+                        <IconButton 
+                            color="primary"
+                            aria-label="open drawer"
+                            onClick={handleDrawerOpen}
+                            edge="start"
+                            className={clsx(classes.menuButton, open && classes.hide)}
+                        >
+                            <MenuIcon />
+                        </IconButton>
+                        <NextLink href="/" passHref>
+                            <Link>
+                                <Typography>Next Project</Typography>
+                            </Link>
+                        </NextLink>
+                        <div className={classes.grow}></div>
+                        <NextLink href="/setup/basic/department" passHref>
+                            <Link>
+                                <Typography>Department</Typography>
+                            </Link>
+                        </NextLink>
+                    </Toolbar>
+                </AppBar>
                 <Drawer
                     className={classes.drawer}
                     variant="persistent"
@@ -143,8 +161,8 @@ export default function Layout({children}) {
                     <List>
                     {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
                         <ListItem button key={text}>
-                        <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-                        <ListItemText primary={text} />
+                            <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
+                            <ListItemText primary={text} />
                         </ListItem>
                     ))}
                     </List>
@@ -158,6 +176,11 @@ export default function Layout({children}) {
                     ))}
                     </List>
                 </Drawer>
+                <main
+                    className={clsx(classes.content, {
+                    [classes.contentShift]: open,
+                    })}
+                ></main>
                 {/* <Toolbar>
                     <NextLink href="/" passHref>
                         <Link>
@@ -171,7 +194,7 @@ export default function Layout({children}) {
                         </Link>
                     </NextLink>
                 </Toolbar> */}
-                </AppBar>
+                
 
                 <Container className={classes.main}>
                     {children}
