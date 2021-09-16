@@ -13,6 +13,7 @@ import MailIcon from '@material-ui/icons/Mail';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import CssBaseline from '@material-ui/core/CssBaseline';
+import { Dvr, SettingsApplications } from '@material-ui/icons';
 
 function ListItemLink(props) {
   return <ListItem button component="a" {...props} />;
@@ -108,6 +109,9 @@ export default function Layout({children}) {
     const handleDrawerClose = () => {
         setOpen(false);
     };
+
+    const menuModuleName = ['FA Register', 'FA Identification', 'FA Validation','FA Ownership', 'FA Approval']
+    const menuSetupName = ['Basic Setup', 'Module Setup']
     
     return (
         <div className={classes.root}>
@@ -143,6 +147,7 @@ export default function Layout({children}) {
                         </NextLink>
                     </Toolbar>
                 </AppBar>
+                
                 <Drawer
                     className={classes.drawer}
                     variant="persistent"
@@ -159,42 +164,29 @@ export default function Layout({children}) {
                     </div>
                     <Divider />
                     <List>
-                    {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-                        <ListItem button key={text}>
-                            <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
+                    {menuModuleName.map((text, index) => (
+                        <ListItem button key={text} component="a" href={text.toLowerCase().replace(/\s/g, '-')}>
+                            <ListItemIcon>{index % 2 === 0 ? <Dvr /> : <Dvr />}</ListItemIcon>
                             <ListItemText primary={text} />
                         </ListItem>
                     ))}
                     </List>
                     <Divider />
                     <List>
-                    {['All mail', 'Trash', 'Spam'].map((text, index) => (
-                        <ListItem button key={text}>
-                        <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
+                    {menuSetupName.map((text, index) => (
+                        <ListItem button key={text} component="a" href={text.toLowerCase().replace(/\s/g, '-')}>
+                        <ListItemIcon>{index % 2 === 0 ? <SettingsApplications /> : <SettingsApplications />}</ListItemIcon>
                         <ListItemText primary={text} />
                         </ListItem>
                     ))}
                     </List>
                 </Drawer>
+
                 <main
                     className={clsx(classes.content, {
                     [classes.contentShift]: open,
                     })}
                 ></main>
-                {/* <Toolbar>
-                    <NextLink href="/" passHref>
-                        <Link>
-                            <Typography>Next Project</Typography>
-                        </Link>
-                    </NextLink>
-                    <div className={classes.grow}></div>
-                    <NextLink href="/master/department" passHref>
-                        <Link>
-                            <Typography>Department</Typography>
-                        </Link>
-                    </NextLink>
-                </Toolbar> */}
-                
 
                 <Container className={classes.main}>
                     {children}
