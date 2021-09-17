@@ -145,6 +145,11 @@ export default function Layout({children}) {
                         <div className={classes.grow}></div>
                         {/* <div> */}
                             <Switch checked={darkMode} onChange={darkModeChangeHandler}></Switch>
+                            <NextLink href="/api/hello" passHref>
+                                <Link>
+                                    <Typography>Hello</Typography>
+                                </Link>
+                            </NextLink>
                             <NextLink href="/setup/basic/department" passHref>
                                 <Link>
                                     <Typography>Department</Typography>
