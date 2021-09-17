@@ -1,28 +1,27 @@
-import { createTheme, AppBar, Container, ThemeProvider, Toolbar, Typography, Link, List, ListItem, Divider, Button, SwipeableDrawer, Drawer, IconButton } from '@material-ui/core'
+import { createTheme, AppBar, Container, ThemeProvider, Toolbar, Typography, Link, List, ListItem, Divider, Button, SwipeableDrawer, Drawer, IconButton, Switch } from '@material-ui/core'
 import clsx from 'clsx';
 import MenuIcon from '@material-ui/icons/Menu';
 import { green } from '@material-ui/core/colors'
 import Head from 'next/head'
-import React from 'react'
+import React, { useContext } from 'react'
 import useStyles from '../utils/styles'
 import NextLink from 'next/link';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { Dvr, SettingsApplications } from '@material-ui/icons';
-
-function ListItemLink(props) {
-  return <ListItem button component="a" {...props} />;
-}
+import {Store} from '../utils/Store'
+import Cookies from 'js-cookie';
 
 export default function Layout({children}) {
+    const {state, dispatch} = useContext(Store)
+    const {darkMode} = state
     const drawerWidth = 240;
     const theme = createTheme({
         palette: {
+            type: darkMode ? 'dark' : 'light',
             typography: {
                 h1: {
                     fontSize: '1.6rem',
@@ -112,7 +111,11 @@ export default function Layout({children}) {
 
     const menuModuleName = ['FA Register', 'FA Identification', 'FA Validation','FA Ownership', 'FA Approval']
     const menuSetupName = ['Basic Setup', 'Module Setup']
-    
+    const darkModeChangeHandler = () => {
+        dispatch({ type: darkMode ? 'DARK_MODE_OFF' : 'DARK_MODE_ON'})
+        const newDarkMode = !darkMode
+        Cookies.set('darkMode', newDarkMode ? 'ON' : 'OFF')
+    }
     return (
         <div className={classes.root}>
             <Head>
@@ -140,11 +143,14 @@ export default function Layout({children}) {
                             </Link>
                         </NextLink>
                         <div className={classes.grow}></div>
-                        <NextLink href="/setup/basic/department" passHref>
-                            <Link>
-                                <Typography>Department</Typography>
-                            </Link>
-                        </NextLink>
+                        {/* <div> */}
+                            <Switch checked={darkMode} onChange={darkModeChangeHandler}></Switch>
+                            <NextLink href="/setup/basic/department" passHref>
+                                <Link>
+                                    <Typography>Department</Typography>
+                                </Link>
+                            </NextLink>
+                        {/* </div> */}
                     </Toolbar>
                 </AppBar>
                 
